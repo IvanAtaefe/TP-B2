@@ -9,6 +9,7 @@ public class CharacterMovements : MonoBehaviour
     float rotation;
     float position;
     public float jump;
+    public Transform centerPoint;
     bool jumping;
 
     Rigidbody rb;
@@ -31,15 +32,12 @@ public class CharacterMovements : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D))
         {
-            rotation += rotationSpeed;
-            transform.Translate(movementSpeed, 0, 0);
-            transform.eulerAngles = new Vector3(0, rotation, 0);
+            transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, rotationSpeed);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            rotation -= rotationSpeed;
-            transform.Translate(-movementSpeed, 0, 0);
-            transform.eulerAngles = new Vector3(0, rotation, 0);
+            transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, -rotationSpeed);
+          
         }
         if (Input.GetKeyDown(KeyCode.Space) && jumping == false)
         {
@@ -48,10 +46,17 @@ public class CharacterMovements : MonoBehaviour
         }
 
         void OnCollisionEnter(Collision col){
+            Debug.Log(col.gameObject.tag);
             if (col.gameObject.tag == "ground")
             {
                 jumping = false;
             }
+        }
+        
+        void Rotate(){
+            float x = Mathf.Cos(rotationSpeed) * movementSpeed;
+            float z = Mathf.Sin(rotationSpeed) * movementSpeed;
+            transform.position = new Vector3(x, 0f, z);
         }
     }
 }
