@@ -6,6 +6,8 @@ public class CharacterMovements : MonoBehaviour
 {
     public float movementSpeed;
     public float rotationSpeed;
+    float rotation;
+    float position;
     public float jump;
     bool jumping;
 
@@ -29,13 +31,15 @@ public class CharacterMovements : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Rotate(0, rotationSpeed, 0);
-            transform.Translate(0, 0, movementSpeed);
+            rotation += rotationSpeed;
+            transform.Translate(movementSpeed, 0, 0);
+            transform.eulerAngles = new Vector3(0, rotation, 0);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Rotate(0, -rotationSpeed, 0);
-            transform.Translate(0, 0, -movementSpeed);
+            rotation -= rotationSpeed;
+            transform.Translate(-movementSpeed, 0, 0);
+            transform.eulerAngles = new Vector3(0, rotation, 0);
         }
         if (Input.GetKeyDown(KeyCode.Space) && jumping == false)
         {
