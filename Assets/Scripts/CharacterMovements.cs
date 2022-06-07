@@ -32,11 +32,11 @@ public class CharacterMovements : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, rotationSpeed);
+            transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, movementSpeed * 18);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, -rotationSpeed);
+            transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, -movementSpeed * 18);
           
         }
         if (Input.GetKeyDown(KeyCode.Space) && jumping == false)
@@ -45,18 +45,18 @@ public class CharacterMovements : MonoBehaviour
             jumping = true;
         }
 
-        void OnCollisionEnter(Collision col){
-            Debug.Log(col.gameObject.tag);
-            if (col.gameObject.tag == "ground")
-            {
-                jumping = false;
-            }
-        }
         
-        void Rotate(){
-            float x = Mathf.Cos(rotationSpeed) * movementSpeed;
-            float z = Mathf.Sin(rotationSpeed) * movementSpeed;
-            transform.position = new Vector3(x, 0f, z);
+    }
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "ground")
+        {
+            jumping = false;
+        }
+        if (col.gameObject.tag == "Beam")
+        {
+            Debug.Log("HOLA");
         }
     }
+
 }
