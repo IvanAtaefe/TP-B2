@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BeamMovement : MonoBehaviour
+public class EnemyBeaming : MonoBehaviour
 {
-    public float rotation;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,8 +13,6 @@ public class BeamMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, rotation);
+        
     }
-    
-
 }
