@@ -53,6 +53,11 @@ public class CharacterMovements : MonoBehaviour
         {
             jumping = false;
         }
+        
+    }
+
+    void OnTriggerEnter (Collider col)
+    {
         if (col.gameObject.tag == "Beam")
         {
             Debug.Log("HOLA");
