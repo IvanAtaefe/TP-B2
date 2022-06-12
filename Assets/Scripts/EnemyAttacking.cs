@@ -19,22 +19,22 @@ public class EnemyAttacking : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         time = Time.time;
         if (Input.GetKeyDown(KeyCode.N))
         {
-            GameObject clon = Instantiate(beam, new Vector3(0f, 0f, 12f), new Quaternion(90f, 90f, 90f, 90f));
+            
+            GameObject clon = Instantiate(beam, this.gameObject.transform);
             Destroy(clon, 3.6f);
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
-            GameObject clonb = Instantiate(bullet, new Vector3(0f, 0f, 0f), new Quaternion(0f, 0f, 0f, 0f));
-            //GameObject clonb2 = Instantiate(bullet, new Vector3(0f, 0f, 0f), new Quaternion(90f, 90f, 90f, 90f));
-            GameObject clonb3 = Instantiate(bullet, new Vector3(0f, 0f, 0f), new Quaternion(180f, 180f, 180f, 180f));
-            //GameObject clonb4 = Instantiate(bullet, new Vector3(0f, 0f, 0f), new Quaternion(270f, 270f, 270f, 270f));
-            //Destroy(clonb, 3.6f);
-            //Destroy(clonb2, 3.6f);
-            //Destroy(clonb3, 3.6f);
-            //Destroy(clonb4, 3.6f);
+                for (float i = 0; i <= 360; i += 90)
+                {
+                    GameObject clonb = Instantiate(bullet, this.gameObject.transform);
+                    clonb.transform.Rotate(0f, i, 0f);
+                    Destroy(clonb, 3.6f);
+                }
         }
     }
 }
