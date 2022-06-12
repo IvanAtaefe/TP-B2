@@ -7,7 +7,7 @@ public class EnemyAttacking : MonoBehaviour
     public GameObject beam;
     public GameObject player;
     public GameObject bullet;
-    Quaternion playerrotation;
+    public float rotation;
     float time;
 
     // Start is called before the first frame update
@@ -19,12 +19,12 @@ public class EnemyAttacking : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        this.transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, rotation);
         time = Time.time;
         if (Input.GetKeyDown(KeyCode.N))
         {
-            
             GameObject clon = Instantiate(beam, this.gameObject.transform);
+            clon.transform.eulerAngles = this.transform.eulerAngles + new Vector3 (90f, 0f, 90f);
             Destroy(clon, 3.6f);
         }
         if (Input.GetKeyDown(KeyCode.M))
