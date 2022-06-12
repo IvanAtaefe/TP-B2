@@ -9,7 +9,7 @@ public class CharacterMovements : MonoBehaviour
     float rotation;
     float position;
     public float jump;
-    public Transform centerPoint;
+    public GameObject enemy;
     bool jumping;
 
     Rigidbody rb;
@@ -33,11 +33,13 @@ public class CharacterMovements : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, movementSpeed * 18);
+            enemy.transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, movementSpeed * 18);
         }
         if (Input.GetKey(KeyCode.A))
         {
             transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, -movementSpeed * 18);
-          
+            enemy.transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, -movementSpeed * 18);
+
         }
         if (Input.GetKeyDown(KeyCode.Space) && jumping == false)
         {
@@ -58,8 +60,10 @@ public class CharacterMovements : MonoBehaviour
 
     void OnTriggerEnter (Collider col)
     {
+        Debug.Log(Time.time);
         if (col.gameObject.tag == "Beam")
         {
+            Debug.Log(Time.time);
             Debug.Log("HOLA");
         }
     }
