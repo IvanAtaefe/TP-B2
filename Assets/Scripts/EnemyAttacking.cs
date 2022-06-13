@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyAttacking : MonoBehaviour
 {
+   
     public AudioSource action;
     public AudioClip beams;
     public AudioClip bullets;
@@ -11,11 +12,8 @@ public class EnemyAttacking : MonoBehaviour
     public GameObject player;
     public GameObject bullet;
     public float rotation;
-    float time;
-    bool attacking;
-    bool bulleting;
-    float disparo;
     float secondpassed = 5;
+    bool attacking;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +24,6 @@ public class EnemyAttacking : MonoBehaviour
     void Update()
     {
         this.transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, rotation);
-        time = Time.time;
 
         int r = Random.Range(0, 100);
         if (Mathf.Floor(Time.time) == secondpassed) {
@@ -51,20 +48,21 @@ public class EnemyAttacking : MonoBehaviour
             }
             else
             {
-                disparar();
+                float y = Random.Range(0f, 3f);
+                disparar(y);
             }
 
         }
        
     }
-    void disparar()
+    void disparar( float r)
     {
 
         for (float i = 0; i <= 360; i += 90)
         {
             action.clip = bullets;
             action.Play();
-            GameObject clonb = Instantiate(bullet, new Vector3(transform.position.x, Random.Range(0f, 2f), transform.position.y), this.gameObject.transform.rotation);
+            GameObject clonb = Instantiate(bullet, new Vector3(transform.position.x, r, transform.position.z), this.gameObject.transform.rotation, this.gameObject.transform);
             clonb.transform.Rotate(0f, i, 0f);
             Destroy(clonb, 7.2f);
         }

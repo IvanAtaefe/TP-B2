@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CharacterMovements : MonoBehaviour
 {
+    public AudioSource scream;
     public AudioSource jumpings;
     public float movementSpeed;
     public float rotationSpeed;
@@ -39,6 +41,14 @@ public class CharacterMovements : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (vidasmax < 0)
+        {
+            SceneManager.LoadScene(2);
+        }
+        if (vidaenemy <= 0)
+        {
+            SceneManager.LoadScene(3);
+        }
         //Corregir Posición
         if (this.transform.eulerAngles.x != 0 || this.transform.eulerAngles.z != 0)
         {
@@ -170,7 +180,7 @@ public class CharacterMovements : MonoBehaviour
         //Ataque
         if (col.gameObject.tag == "Beam" && invincible == false)
         {
-            jumpings.clip = daños;
+            scream.clip = daños;
             jumpings.Play();
             endofinvinsible = Mathf.Floor(Time.time) + invinsibletime;
             vidasmax--;
