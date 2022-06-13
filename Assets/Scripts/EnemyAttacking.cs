@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class EnemyAttacking : MonoBehaviour
 {
+    public AudioSource action;
+    public AudioClip beams;
+    public AudioClip bullets;
     public GameObject beam;
     public GameObject player;
     public GameObject bullet;
     public float rotation;
     float time;
+    bool attacking;
+    bool bulleting;
+    float disparo;
+    float secondpassed = 5;
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -21,20 +27,46 @@ public class EnemyAttacking : MonoBehaviour
     {
         this.transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, rotation);
         time = Time.time;
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            GameObject clon = Instantiate(beam, this.gameObject.transform);
-            clon.transform.eulerAngles = this.transform.eulerAngles + new Vector3 (90f, 0f, 90f);
-            Destroy(clon, 1.2f);
+
+        int r = Random.Range(0, 100);
+        if (Mathf.Floor(Time.time) == secondpassed) {
+
+            secondpassed++;
+            if (r <= 10)
+            {
+                action.clip = beams;
+                action.Play();
+                attacking = true;
+                GameObject clon = Instantiate(beam, this.gameObject.transform);
+                clon.transform.eulerAngles = this.transform.eulerAngles + new Vector3(90f, 0f, 90f);
+                Destroy(clon, 2.4f);
+            }
+            else if (r >= 90)
+            {
+                rotation *= -1;
+            }
+            else if (r > 40 && r < 55)
+            {
+
+            }
+            else
+            {
+                disparar();
+            }
+
         }
-        if (Input.GetKeyDown(KeyCode.M))
+       
+    }
+    void disparar()
+    {
+
+        for (float i = 0; i <= 360; i += 90)
         {
-                for (float i = 0; i <= 360; i += 90)
-                {
-                    GameObject clonb = Instantiate(bullet, this.gameObject.transform);
-                    clonb.transform.Rotate(0f, i, 0f);
-                    Destroy(clonb, 3.6f);
-                }
+            action.clip = bullets;
+            action.Play();
+            GameObject clonb = Instantiate(bullet, new Vector3(transform.position.x, Random.Range(0f, 2f), transform.position.y), this.gameObject.transform.rotation);
+            clonb.transform.Rotate(0f, i, 0f);
+            Destroy(clonb, 7.2f);
         }
     }
 }

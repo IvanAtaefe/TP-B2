@@ -9,6 +9,7 @@ public class CharacterMovements : MonoBehaviour
     public float movementSpeed;
     public float rotationSpeed;
     public AudioClip jumps;
+    public AudioClip daños;
     public float jump;
     public GameObject enemy;
     bool jumping;
@@ -32,8 +33,6 @@ public class CharacterMovements : MonoBehaviour
     Rigidbody rb;
     void Start()
     {
-
-        jumpings.clip = jumps;
         rb = GetComponent<Rigidbody>();
     }
 
@@ -127,6 +126,7 @@ public class CharacterMovements : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && jumping == false)
         {
+            jumpings.clip = jumps;
             jumpings.Play();
             rb.AddForce(Vector3.up * jump, ForceMode.Impulse);
             jumping = true;
@@ -170,6 +170,8 @@ public class CharacterMovements : MonoBehaviour
         //Ataque
         if (col.gameObject.tag == "Beam" && invincible == false)
         {
+            jumpings.clip = daños;
+            jumpings.Play();
             endofinvinsible = Mathf.Floor(Time.time) + invinsibletime;
             vidasmax--;
             invincible = true;
