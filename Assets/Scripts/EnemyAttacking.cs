@@ -18,6 +18,7 @@ public class EnemyAttacking : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        secondpassed = Mathf.Floor(Time.time + 5);
     }
 
     // Update is called once per frame

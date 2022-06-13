@@ -181,7 +181,7 @@ public class CharacterMovements : MonoBehaviour
         if (col.gameObject.tag == "Beam" && invincible == false)
         {
             scream.clip = daños;
-            jumpings.Play();
+            scream.Play();
             endofinvinsible = Mathf.Floor(Time.time) + invinsibletime;
             vidasmax--;
             invincible = true;
