@@ -23,6 +23,7 @@ public class CharacterMovements : MonoBehaviour
     public Text vidas;
     public Text ataquet;
     public int vidasmax;
+    int vidaact;
     public float invinsibletime;
     public RawImage vida;
     public RawImage ataque;
@@ -35,18 +36,23 @@ public class CharacterMovements : MonoBehaviour
     Rigidbody rb;
     void Start()
     {
+        vidaact = vidasmax;
         rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (vidasmax < 0)
+        if (vidaact < 0)
         {
+            vidaact = vidasmax;
+            vidaenemy = 1;
             SceneManager.LoadScene(2);
         }
         if (vidaenemy <= 0)
         {
+            vidaact = vidasmax;
+            vidaenemy = 1;
             SceneManager.LoadScene(3);
         }
         //Corregir Posición
@@ -83,7 +89,7 @@ public class CharacterMovements : MonoBehaviour
 
         //UI
         tiempo.text = "Tiempo: " + Mathf.Floor(Time.time);
-        vidas.text = "Vidas: " + vidasmax;
+        vidas.text = "Vidas: " + vidaact;
         if (ataquep < 1  && Time.time > cargarataque)
         {
             ataquep += 0.01f;
@@ -183,7 +189,7 @@ public class CharacterMovements : MonoBehaviour
             scream.clip = daños;
             scream.Play();
             endofinvinsible = Mathf.Floor(Time.time) + invinsibletime;
-            vidasmax--;
+            vidaact--;
             invincible = true;
         }
     }

@@ -20,5 +20,6 @@ public class SceneManagerScript : MonoBehaviour
     public void nuevaescena()
     {
         EditorSceneManager.LoadScene(1);
+        
     }
 }
