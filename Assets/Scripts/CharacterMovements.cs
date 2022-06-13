@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterMovements : MonoBehaviour
 {
-    AudioSource jumpings;
+    public AudioSource jumpings;
     public float movementSpeed;
     public float rotationSpeed;
     public AudioClip jumps;
@@ -32,6 +32,7 @@ public class CharacterMovements : MonoBehaviour
     Rigidbody rb;
     void Start()
     {
+
         jumpings.clip = jumps;
         rb = GetComponent<Rigidbody>();
     }
@@ -39,6 +40,32 @@ public class CharacterMovements : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Corregir Posición
+        if (this.transform.eulerAngles.x != 0 || this.transform.eulerAngles.z != 0)
+        {
+            transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
+        }
+        if (this.transform.position.z > 24)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, 23.5f);
+        }
+        if (this.transform.position.z < -24)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, -23.5f);
+        }
+        if (this.transform.position.x > 24)
+        {
+            transform.position = new Vector3(23.5f, transform.position.y, transform.position.z);
+        }
+        if (this.transform.position.x < -24)
+        {
+            transform.position = new Vector3(-23.5f, transform.position.y, transform.position.z);
+        }
+        if (this.transform.position.y < -1f)
+        {
+            transform.position = new Vector3(transform.position.x, 2f, transform.position.z);
+        }
+
         //Invencibilidad
         if (Mathf.Floor(Time.time) > endofinvinsible)
         {
@@ -97,11 +124,12 @@ public class CharacterMovements : MonoBehaviour
             movingright = false;
 
         }
+
         if (Input.GetKeyDown(KeyCode.Space) && jumping == false)
         {
+            jumpings.Play();
             rb.AddForce(Vector3.up * jump, ForceMode.Impulse);
             jumping = true;
-            jumpings.Play();
         }
 
         
@@ -131,30 +159,8 @@ public class CharacterMovements : MonoBehaviour
             {
                 transform.Translate(0, 0, movementSpeed);
             }
-            if (this.transform.eulerAngles.x != 0 || this.transform.eulerAngles.z != 0)
-            {
-                transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
-            }
-            if (this.transform.position.z > 24)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y, 23.5f);
-            }
-            if (this.transform.position.z < -24)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y, -23.5f);
-            }
-            if (this.transform.position.x > 24)
-            {
-                transform.position = new Vector3(23.5f, transform.position.y, transform.position.z);
-            }
-            if (this.transform.position.x < -24)
-            {
-                transform.position = new Vector3(-23.5f, transform.position.y, transform.position.z);
-            }
-            if (this.transform.position.y < -1f)
-            {
-                transform.position = new Vector3(transform.position.x, 2f, transform.position.z);
-            }
+            
+            
         }
 
     }
