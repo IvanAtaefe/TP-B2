@@ -25,7 +25,7 @@ public class EnemyAttacking : MonoBehaviour
         {
             GameObject clon = Instantiate(beam, this.gameObject.transform);
             clon.transform.eulerAngles = this.transform.eulerAngles + new Vector3 (90f, 0f, 90f);
-            Destroy(clon, 3.6f);
+            Destroy(clon, 1.2f);
         }
         if (Input.GetKeyDown(KeyCode.M))
         {

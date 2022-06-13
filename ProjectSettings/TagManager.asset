@@ -7,6 +7,7 @@ TagManager:
   - Fire
   - ground
   - Beam
+  - Wall
   layers:
   - Default
   - TransparentFX

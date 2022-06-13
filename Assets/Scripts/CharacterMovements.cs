@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterMovements : MonoBehaviour
 {
@@ -12,9 +13,21 @@ public class CharacterMovements : MonoBehaviour
     bool movingbackwards;
     bool movingright;
     bool movingleft;
-
-    Rigidbody rb;
+    bool invincible = false;
+    public Text tiempo;
+    public Text vidas;
+    public Text ataquet;
+    public int vidasmax;
+    public float invinsibletime;
+    public RawImage vida;
+    public RawImage ataque;
+    public float cargarataques;
+    float vidaenemy = 1;
+    float endofinvinsible;
+    float ataquep = 0;
+    float cargarataque;
     // Start is called before the first frame update
+    Rigidbody rb;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -23,6 +36,31 @@ public class CharacterMovements : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Floor(Time.time) > endofinvinsible)
+        {
+            invincible = false;
+        }
+        tiempo.text = "Tiempo: " + Mathf.Floor(Time.time);
+        vidas.text = "Vidas: " + vidasmax;
+        if (ataquep < 1  && Time.time > cargarataque)
+        {
+            ataquep += 0.01f;
+            ataque.transform.localScale = new Vector3(ataquep, 1, 0);
+            ataquet.text = "%" + Mathf.Floor(ataquep * 100);
+            cargarataque = Time.time + cargarataques;
+        }
+        else if (ataquep >= 1)
+        {
+            ataquet.text = "¡Ataque Cargado!";
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && ataquep >= 1)
+        {
+            ataquep = 0;
+            vidaenemy -= 0.1f;
+            vida.transform.localScale = new Vector3(vidaenemy, 1, 0);
+        }
+
         if (this.transform.eulerAngles.x != 0 || this.transform.eulerAngles.z != 0)
         {
             transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
@@ -92,13 +130,9 @@ public class CharacterMovements : MonoBehaviour
         {
             if (movingbackwards)
             {
-                transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, movementSpeed * 18);
+                transform.Translate(0, 0, movementSpeed);
             }
-            else
-            {
-                transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, -movementSpeed * 18);
-            }
-            if (movingright)
+            else if (movingright)
             {
                 transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, -movementSpeed * 18);
             }
@@ -106,18 +140,22 @@ public class CharacterMovements : MonoBehaviour
             {
                 transform.RotateAround(new Vector3(0, 0, 0), Vector3.up, movementSpeed * 18);
             }
-            
+            else
+            {
+                transform.Translate(0, 0, movementSpeed);
+            }
+
         }
 
     }
 
     void OnTriggerEnter (Collider col)
     {
-        Debug.Log(Time.time);
-        if (col.gameObject.tag == "Beam")
+        if (col.gameObject.tag == "Beam" && invincible == false)
         {
-            Debug.Log(Time.time);
-            Debug.Log("HOLA");
+            endofinvinsible = Mathf.Floor(Time.time) + invinsibletime;
+            vidasmax--;
+            invincible = true;
         }
     }
 
