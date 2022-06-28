@@ -12,6 +12,7 @@ public class EnemyAttacking : MonoBehaviour
     public GameObject player;
     public GameObject bullet;
     public float rotation;
+    public float destroybullet;
     float secondpassed = 5;
     bool attacking;
 
@@ -37,7 +38,7 @@ public class EnemyAttacking : MonoBehaviour
                 attacking = true;
                 GameObject clon = Instantiate(beam, this.gameObject.transform);
                 clon.transform.eulerAngles = this.transform.eulerAngles + new Vector3(90f, 0f, 90f);
-                Destroy(clon, 2.4f);
+                Destroy(clon, destroybullet);
             }
             else if (r >= 90)
             {
